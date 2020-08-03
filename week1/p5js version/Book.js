@@ -15,9 +15,9 @@ function Book(title,author,text,dimensions,palette) {
     this.foldSize = 5;
 
     this.show = function() {
-        this.castShadow();
+        //this.castShadow();
         this.cover.show();
-        this.castFolds();
+        //this.castFolds();
     }
 
     this.castShadow = function() {

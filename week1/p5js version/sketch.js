@@ -2,7 +2,7 @@ let txt;
 let b;
 
 function preload() {
-    txt = loadStrings('assets/short-stories/carne-empalada-rodrigo-junqueira.txt');
+    txt = loadStrings('../../assets/short-stories/carne-empalada-rodrigo-junqueira.txt');
 }
 
 function setup() {
@@ -29,4 +29,5 @@ function draw() {
     b.show();
     noLoop();
 
+    save(round(random(1000)) + '.jpg');
 }

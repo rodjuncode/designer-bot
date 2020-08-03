@@ -10,7 +10,7 @@ function Cover(book) {
 
     this.generate = function() {
         this.generateArt();
-        this.generateTitle();
+        //this.generateTitle();
     }
 
     this.generateTitle = function() {
@@ -38,15 +38,18 @@ function Cover(book) {
         let x = 0;
         let y = 0;
 
-        let w = ceil(random(1,5));
-        let h = ceil(random(10,50));
+        let w = 1;
+        let h = 5;
+
+        this.art.colorMode(HSB,360,100,100,100);
 
         this.art.noStroke();
         while(y <= this.book.getDimensions().y) {
             for (let i = 0; i < sentences.length; i++) {
                 let size = sentences[i].length;
                 let hue = round(map(size,0,longestSentenceSize,0,palette.length-1));
-                this.art.fill(palette[hue]);        
+                //this.art.fill(palette[hue]);        
+                this.art.fill(color(round(map((size),0,longestSentenceSize,0,360)),100,100,100));
                 for (let j = 0; j < sentences[i].length; j++) {
                     this.art.rect(x,y,w,h);
                     x += w;
