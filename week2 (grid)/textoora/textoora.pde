@@ -2,7 +2,7 @@ Book b;
 
 
 void setup() {
-  size(500,500);
+  size(600,600);
   colorMode(HSB,360,100,100,100);
       
   // create palette
@@ -11,10 +11,10 @@ void setup() {
   palette[0] = color(44, 62, 96, alpha);
   palette[1] = color(60, 3, 14, alpha);
   palette[2] = color(150, 5, 86, alpha);
-  
-  b = new Book("Carne\nEmpalada","Rodrigo Junqueira","assets/short-stories/carne-empalada-rodrigo-junqueira.txt",new PVector(300,400,10),palette);
+  int x = 300;
+  b = new Book("Carne\nEmpalada","Rodrigo Junqueira","assets/short-stories/carne-empalada-rodrigo-junqueira.txt",new PVector(x,x*1.6,10),palette);
   b.parseTxt();
-  b.generateArt();
+  b.generate();
 }
 
 

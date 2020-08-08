@@ -4,15 +4,25 @@ class Cover {
   PGraphics art;
   PGraphics title;
   
+  Grid grid;
+  
   Cover(Book book) {
     this.book = book;
-    this.art = createGraphics(round(this.book.getDimensions().x),round(this.book.getDimensions().y));
-    this.title = createGraphics(round(this.book.getDimensions().x/2),round(this.book.getDimensions().y/2));
+    this.grid = new Grid(this);    
   }
   
   void show() {
+    this.show(false);
+  }
+  
+  void show(boolean showGrid) {
+    if (showGrid) {
+      this.grid.show();
+    }
     image(this.art, 0, 0);
-    image(this.title,random(50,150),random(50,150));
+    //image(this.title,random(50,150),random(50,150));
+    PVector titlePos = this.grid.getRandomPosition();
+    image(this.title,titlePos.x,titlePos.y);
   }
   
   void generate() {
@@ -21,6 +31,7 @@ class Cover {
   }
   
   void generateTitle() {
+    this.title = createGraphics(round(this.book.getDimensions().x/2),round(this.book.getDimensions().y/2));    
     String title = this.book.getTitle();
     String author = this.book.getAuthor();
     this.title.beginDraw();
@@ -37,6 +48,7 @@ class Cover {
   }
   
   void generateArt() {
+    this.art = createGraphics(round(this.book.getDimensions().x),round(this.book.getDimensions().y));    
     ArrayList<String> sentences = this.book.getSentences();
     int longestSentenceSize = this.book.getLongestSentenceSize();
     color[] palette = this.book.getPalette();

@@ -10,7 +10,7 @@ class Book {
   int longestSentenceSize;
   
   Cover cover;
-  
+ 
   float shadowSize = 5;
   float foldSize = 5;
   
@@ -30,7 +30,7 @@ class Book {
   
   void show() {
     this.castShadow();
-    this.cover.show();
+    this.cover.show(true);
     this.castFolds();
   }
 
@@ -72,10 +72,9 @@ class Book {
   }
 
 
-  void generateArt() {
+  void generate() {
     this.cover = new Cover(this);  
     this.cover.generate();
-    
   }
   
   ArrayList<String> getSentences() {
