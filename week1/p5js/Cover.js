@@ -10,7 +10,7 @@ function Cover(book) {
 
     this.generate = function() {
         this.generateArt();
-        //this.generateTitle();
+        this.generateTitle();
     }
 
     this.generateTitle = function() {
@@ -35,30 +35,57 @@ function Cover(book) {
         let longestSentenceSize = this.book.getLongestSentenceSize();
         let palette = this.book.getPalette();
 
-        let x = 0;
-        let y = 0;
-
-        let w = 1;
-        let h = 5;
-
+        this.art.background(255);
         this.art.colorMode(HSB,360,100,100,100);
 
         this.art.noStroke();
-        while(y <= this.book.getDimensions().y) {
+
+        let x = 0;
+        let y = 0;
+
+        // vertical
+        let w = ceil(random(10,50));
+        let h = ceil(random(1,5));
+
+        while(x <= this.book.getDimensions().x) {
             for (let i = 0; i < sentences.length; i++) {
                 let size = sentences[i].length;
                 let hue = round(map(size,0,longestSentenceSize,0,palette.length-1));
-                //this.art.fill(palette[hue]);        
-                this.art.fill(color(round(map((size),0,longestSentenceSize,0,360)),100,100,100));
+                this.art.fill(palette[hue]);        
                 for (let j = 0; j < sentences[i].length; j++) {
                     this.art.rect(x,y,w,h);
-                    x += w;
-                    if (x >= this.book.getDimensions().x) {
-                        x = 0;
-                        y += h;
+                    y += h;
+                    if (y >= this.book.getDimensions().y) {
+                        y = 0;
+                        x += w;
                     }
                 }
             }
         }
+
+        // ideias
+        // - vertical
+        // - arcos
+        // - horizontal
+        // - paralelograma
+        // - perlin noise para shiftar linhas
+        // - combinar padrões com alpha
+        // let w = ceil(random(1,5));
+        // let h = ceil(random(10,50));
+        // while(y <= this.book.getDimensions().y) {
+        //     for (let i = 0; i < sentences.length; i++) {
+        //         let size = sentences[i].length;
+        //         let hue = round(map(size,0,longestSentenceSize,0,palette.length-1));
+        //         this.art.fill(palette[hue]);        
+        //         for (let j = 0; j < sentences[i].length; j++) {
+        //             this.art.rect(x,y,w,h);
+        //             x += w;
+        //             if (x >= this.book.getDimensions().x) {
+        //                 x = 0;
+        //                 y += h;
+        //             }
+        //         }
+        //     }
+        // }
     }
 }

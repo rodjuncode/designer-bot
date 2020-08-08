@@ -15,9 +15,9 @@ function Book(title,author,text,dimensions,palette) {
     this.foldSize = 5;
 
     this.show = function() {
-        //this.castShadow();
+        this.castShadow();
         this.cover.show();
-        //this.castFolds();
+        this.castFolds();
     }
 
     this.castShadow = function() {
@@ -47,7 +47,7 @@ function Book(title,author,text,dimensions,palette) {
             let sentenceSize = sentence.length;
 
             this.sentences.push(sentence);
-            this.sentencesWordCount[sentence] = sentence.sentenceSize;
+            //this.sentencesWordCount[sentence] = sentence.sentenceSize;
 
             if (sentenceSize > this.longestSentenceSize) {
                 this.longestSentenceSize = sentenceSize;
