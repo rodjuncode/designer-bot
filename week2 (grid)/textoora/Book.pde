@@ -24,8 +24,8 @@ class Book {
     this.sentences = new ArrayList<String>();
     this.longestSentenceSize = 0;
 
-    this.shadowSize = 5;
-    this.foldSize = 5;
+    this.shadowSize = this.dimensions.x/50;
+    this.foldSize = this.dimensions.x/50;
   }
   
   void show() {
