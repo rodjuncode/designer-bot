@@ -30,10 +30,15 @@ class Book {
   
   void show() {
     this.castShadow();
-    this.cover.show(true);
+    this.cover.show();
     this.castFolds();
   }
 
+  void show(boolean showGrid) {
+    this.castShadow();
+    this.cover.show(showGrid);
+    this.castFolds();
+  }
 
   void castShadow() {
     push();

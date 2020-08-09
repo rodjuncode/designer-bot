@@ -4,7 +4,9 @@ Book b;
 void setup() {
   size(700,700);
   colorMode(HSB,360,100,100,100);
-      
+  
+  frameRate(2);
+  
   // create palette
   color palette[] = new color[3];
   int alpha = 100;
@@ -22,10 +24,11 @@ void setup() {
 void draw() {
   background(0,0,80,100);
   translate(width/2-b.getDimensions().x/2,height/2-b.getDimensions().y/2);
-  b.show();
-  //b.generate();
+  b.show(mousePressed);
+  b.generate();
+  //saveFrame("../../../_output/textoora/frame####.png");
 }
 
-void mousePressed() {
-  b.generate(); 
-}
+//void mousePressed() {
+//  b.generate(); 
+//}

@@ -14,7 +14,11 @@ class Grid {
     this.canvas = canvas;    
     this.horizontalBlocks = horizontalBlocks;
     this.verticalBlocks = verticalBlocks;
-    this.margins = margins;    
+    if (margins.length == 1) {
+      this.margins = new float[]{margins[0],margins[0],margins[0],margins[0]};
+    } else {
+      this.margins = margins;
+    }
     this.blockWidth = (float) this.getGridWidth()/horizontalBlocks;
     this.blockHeight = (float) this.getGridHeight()/verticalBlocks;
   }

@@ -6,6 +6,7 @@ class Cover {
   PVector titlePosition;
   
   Grid grid;
+  Grid titleGrid;
   
   Cover(Book book) {
     this.book = book;
@@ -18,6 +19,7 @@ class Cover {
   void show(boolean showGrid) {
     if (showGrid) {
       this.grid.show();
+      this.titleGrid.show();
     }
     image(this.art, 0, 0);
     image(this.title,this.titlePosition.x,titlePosition.y);
@@ -28,6 +30,7 @@ class Cover {
     this.grid = new Grid(this.art,9,9, new float[]{10.0,10.0,10.0,30.0});
     this.generateArt();
     this.title = createGraphics((int) this.grid.getWidthFromBlocks(5),(int) this.grid.getHeightFromBlocks(4));
+    this.titleGrid = new Grid(this.title,9,9,new float[]{10.0});
     this.titlePosition = this.grid.getFitRandomPosition(this.title.width,this.title.height);    
     this.generateTitle();
   }
@@ -37,14 +40,20 @@ class Cover {
     String author = this.book.getAuthor();
     this.title.beginDraw();
     this.title.background(156, random(255), 184);
+    // main title
     this.title.fill(255);
-    this.title.textAlign(RIGHT);
-    this.title.textFont(createFont("Georgia", 30));
-    this.title.text(title,140,50);
+    this.title.textAlign(RIGHT,TOP);
+    this.title.textFont(createFont("Georgia", 27));
+    this.title.textLeading(27);
+    PVector mainTitlePos = this.titleGrid.getPosition(0,0);
+    this.title.text(title,mainTitlePos.x,mainTitlePos.y,this.titleGrid.getWidthFromBlocks(9),this.titleGrid.getHeightFromBlocks(9));
+    // author
+    this.title.fill(0,0,0,90);    
     this.title.textSize(15);
-    this.title.fill(0,0,0,90);
-    this.title.text(author,140,64);
-    this.title.noStroke();
+    this.title.textLeading(15);
+    this.title.textAlign(LEFT,BOTTOM);
+    PVector authorTitlePos = this.titleGrid.getPosition(0,6);
+    this.title.text(author,authorTitlePos.x,authorTitlePos.y,this.titleGrid.getWidthFromBlocks(9),this.titleGrid.getHeightFromBlocks(3));
     this.title.endDraw();
   }
   
