@@ -37,7 +37,6 @@ class Book {
   void show(boolean showGrid) {
     this.castShadow();
     this.cover.show(showGrid);
-    this.castFolds();
   }
 
   void castShadow() {
@@ -48,6 +47,7 @@ class Book {
     pop();    
   }
   
+  @Deprecated
   void castFolds() {
     push();
     noStroke();
@@ -75,7 +75,6 @@ class Book {
       }      
     }
   }
-
 
   void generate() {
     this.cover = new Cover(this);  

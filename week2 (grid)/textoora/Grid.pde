@@ -10,6 +10,8 @@ class Grid {
   float blockWidth;
   float blockHeight;
   
+  final float DIFF = 0.001;
+  
   Grid(PGraphics canvas, int horizontalBlocks, int verticalBlocks, float[] margins) {
     this.canvas = canvas;    
     this.horizontalBlocks = horizontalBlocks;
@@ -43,7 +45,7 @@ class Grid {
   }
   
   PVector getPosition(int x, int y) {
-     return new PVector(this.getLeftMarginPosition() + this.blockWidth*x + 1,this.getTopMarginPosition() + this.blockHeight*y + 1);
+     return new PVector(this.getLeftMarginPosition() + this.blockWidth*x,this.getTopMarginPosition() + this.blockHeight*y);
   }
   
   PVector getRandomPosition() {
@@ -57,8 +59,8 @@ class Grid {
         w <= this.getGridWidth() && 
         h > 0 && 
         h <= this.getGridHeight()) {
-      float wOffSet = this.getGridWidth() - w;
-      float hOffSet = this.getGridHeight() - h;
+      float wOffSet = this.getGridWidth() - w + 1;
+      float hOffSet = this.getGridHeight() - h + 1;
       int horBlocks = ceil(wOffSet/this.blockWidth);
       int verBlocks = ceil(hOffSet/this.blockHeight);
       int _x = floor(random(horBlocks));
@@ -116,5 +118,13 @@ class Grid {
     return this.canvas.height - this.getTopMargin() - this.getBottomMargin();  
   }
   
+  boolean beyondBottomMargin(float p) {
+    return this.getBottomMarginPosition() - p < DIFF;
+  }
+
+  boolean beyondRightMargin(float p) {
+    return this.getRightMarginPosition() - p < DIFF;
+  }
+
   
 }
