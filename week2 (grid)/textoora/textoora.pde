@@ -20,13 +20,11 @@ void setup() {
   b.parseTxt();
   b.generate();  
   
-  b.cover.art.loadPixels();
-  
-  for (int i = 0; i < 45; i++) {
-    for (int j = 0; j < 45; j++) {
-      boxes.add(new Box(b.cover.art,b.cover.grid,20,2,45,10,i,j,i,j));
-    }
-  }
+  //for (int i = 0; i < 45; i++) {
+  //  for (int j = 0; j < 45; j++) {
+  //    boxes.add(new Box(b.cover.art,b.cover.grid,20,2,45,10,i,j,i,j));
+  //  }
+  //}
   
   //boxes.add(new Box(b.cover.art,b.cover.grid,1,1,0,0,0,0));
 }
@@ -37,30 +35,29 @@ void draw() {
   translate(width/2-b.getDimensions().x/2,height/2-b.getDimensions().y/2);
   b.show(false);
   
-  for (int i = 0; i < boxes.size(); i++) {
-    //boxes.get(i).show();
-    boxes.get(i).grow();
-    boxes.get(i).checkBorders();
-    boxes.get(i).evaluate();
-    if (!boxes.get(i).valid) {
-      boxes.remove(i);  
-    }
-  }
+  //for (int i = 0; i < boxes.size(); i++) {
+  //  //boxes.get(i).show();
+  //  boxes.get(i).grow();
+  //  boxes.get(i).checkBorders();
+  //  boxes.get(i).evaluate();
+  //  if (!boxes.get(i).valid) {
+  //    boxes.remove(i);  
+  //  }
+  //}
   
-  boxes.get(showBox).show();
   
   //b.generate();
-  //noLoop();
+  noLoop();
   
   //saveFrame("../../../_output/textoora/boxes/frame####.png");
 }
 
 void mousePressed() {
-  if (showBox < boxes.size()) {
-    showBox++;
-  } else {
-    showBox = 0;
-  }
+  //if (showBox < boxes.size()) {
+  //  showBox++;
+  //} else {
+  //  showBox = 0;
+  //}
   //saveFrame("../../../_output/textoora/frame####.png");
   //b.generate();  
 }

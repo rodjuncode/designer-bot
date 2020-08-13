@@ -13,6 +13,7 @@ class Box {
   color myColor;
   color myStroke;
   boolean valid;
+  boolean done;
   boolean crashedUp;
   boolean crashedDown;
   boolean crashedLeft;
@@ -32,6 +33,7 @@ class Box {
     this.myColor = this.getColor(beginX,beginY);
     this.myStroke = color(random(360),100,100,100);
     this.valid = true;
+    this.done = false;
     this.crashedUp = false;
     this.crashedDown = false;
     this.crashedLeft = false;
@@ -98,8 +100,14 @@ class Box {
   }
   
   void evaluate() {
-    if (this.endX-this.beginX+1 > this.maxWidth) this.valid = false;
-    if (this.endY-this.beginY+1 > this.maxHeight) this.valid = false;
+    if (this.endX-this.beginX+1 > this.maxWidth) { 
+      this.valid = false;
+      return;
+    }
+    if (this.endY-this.beginY+1 > this.maxHeight) { 
+      this.valid = false;
+      return;
+    }
     if (this.crashedUp && this.crashedDown && this.endY-this.beginY+1 < this.minHeight) {
       this.valid = false;
       return;
@@ -107,6 +115,9 @@ class Box {
     if (this.crashedLeft && this.crashedRight && this.endX-this.beginX+1 < this.minWidth) {
       this.valid = false;
       return;
+    }
+    if (this.crashedUp && this.crashedDown && this.crashedLeft && this.crashedRight) {
+      this.done = true; 
     }
   }
   

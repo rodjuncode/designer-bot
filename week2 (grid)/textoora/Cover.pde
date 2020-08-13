@@ -2,11 +2,16 @@ class Cover {
 
   Book book;
   PGraphics art;
+  int artGridX = 45;
+  int artGridY = 45;
+
   PGraphics title;
   PVector titlePosition;
   
   Grid grid;
   Grid titleGrid;
+  
+  ArrayList<Box> boxes;
   
   Cover(Book book) {
     this.book = book;
@@ -25,12 +30,50 @@ class Cover {
   
   void generate() {
     this.art = createGraphics(round(this.book.getDimensions().x),round(this.book.getDimensions().y)); 
-    this.grid = new Grid(this.art,45,45,new float[]{10.0});
+    this.grid = new Grid(this.art,artGridX,artGridY,new float[]{10.0});
     this.generateArt();
+    this.generateBoxes();
   }
   
   void generateTitle() {
 
+  }
+  
+  void generateBoxes() {
+
+    this.art.loadPixels();
+    
+    ArrayList<Box> b = new ArrayList<Box>();
+    // create boxes or each grid tile
+    for (int i = 0; i < artGridX; i++) {
+      for (int j = 0; j < artGridY; j++) {
+        b.add(new Box(this.art,this.grid,20,2,45,10,i,j,i,j)); // needs to move these arguments to the config
+      }
+    }
+    
+    // develop boxes until all are done
+    boolean allBoxesDone = false;
+    while (!allBoxesDone) {
+      allBoxesDone = true;
+      for (int i = 0; i < this.boxes.size(); i++) {
+        b.get(i).grow();
+        b.get(i).checkBorders();
+        b.get(i).evaluate();
+        if (!b.get(i).done) {
+          allBoxesDone = false;  
+        }
+        if (!b.get(i).valid) {
+          b.remove(i);  
+        }
+      }
+    }
+    
+    // clean boxes    
+    this.boxes = new ArrayList<Box>();
+    
+
+    
+    println(this.boxes.size());
   }
   
   void generateArt() {
