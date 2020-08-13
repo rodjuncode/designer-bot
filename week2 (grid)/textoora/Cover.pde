@@ -25,7 +25,7 @@ class Cover {
   
   void generate() {
     this.art = createGraphics(round(this.book.getDimensions().x),round(this.book.getDimensions().y)); 
-    this.grid = new Grid(this.art,45,45,new float[]{0.0});
+    this.grid = new Grid(this.art,45,45,new float[]{10.0});
     this.generateArt();
   }
   
@@ -59,17 +59,14 @@ class Cover {
         for (int j = 0; j < size; j++) {
           this.art.rect(x,y,w,h);
           x += w;
-          //if (x > this.grid.getRightMarginPosition()) {
           if (this.grid.beyondRightMargin(x)) {            
             x = this.grid.getLeftMarginPosition();
             y += h;
           }
-          //if (y > this.grid.getBottomMarginPosition()) {
           if (this.grid.beyondBottomMargin(y)) {            
             break;
           }
         }
-        //if (y > this.grid.getBottomMarginPosition()) {
         if (this.grid.beyondBottomMargin(y)) {          
           break;
         }

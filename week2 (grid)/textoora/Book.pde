@@ -47,7 +47,7 @@ class Book {
     pop();    
   }
   
-  @Deprecated
+  @Deprecated // ebooks don't have folds
   void castFolds() {
     push();
     noStroke();
@@ -63,9 +63,7 @@ class Book {
     for (int i = 0; i < lines.length; i++) {
       full += lines[i];
     }
-    String
-    tokens[][] = matchAll(full,"[^.!?]*[.!?]");
-
+    String tokens[][] = matchAll(full,"[^.!?]*[.!?]");
     for (int i = 0; i < tokens.length; i++) {
       String sentence = tokens[i][0].trim();
       int sentenceSize = sentence.length();

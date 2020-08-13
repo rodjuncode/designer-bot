@@ -45,7 +45,7 @@ class Grid {
   }
   
   PVector getPosition(int x, int y) {
-     return new PVector(this.getLeftMarginPosition() + this.blockWidth*x,this.getTopMarginPosition() + this.blockHeight*y);
+     return new PVector(round(this.getLeftMarginPosition() + this.blockWidth*x),round(this.getTopMarginPosition() + this.blockHeight*y));
   }
   
   PVector getRandomPosition() {
