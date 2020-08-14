@@ -31,7 +31,7 @@ class Box {
     this.endX = endX;
     this.endY = endY;
     this.myColor = this.getColor(beginX,beginY);
-    this.myStroke = color(random(360),100,100,100);
+    this.myStroke = color(0,100,100,100);
     this.valid = true;
     this.done = false;
     this.crashedUp = false;
@@ -41,7 +41,7 @@ class Box {
   }
   
   color getColor(int x, int y) {
-    PVector position = this.grid.getPosition(x,y); //<>//
+    PVector position = this.grid.getPosition(x,y);
     int i = round(position.y*this.canvas.width+position.x);
     return this.canvas.pixels[i];
   }
@@ -54,6 +54,8 @@ class Box {
     rect(posBegin.x,posBegin.y,
         this.grid.getWidthFromBlocks(1)*(endX-beginX+1),
         this.grid.getHeightFromBlocks(1)*(endY-beginY+1));
+    line(posBegin.x,posBegin.y,posBegin.x+this.grid.getWidthFromBlocks(1)*(endX-beginX+1),posBegin.y+this.grid.getHeightFromBlocks(1)*(endY-beginY+1));
+    line(posBegin.x+this.grid.getWidthFromBlocks(1)*(endX-beginX+1),posBegin.y,posBegin.x,posBegin.y+this.grid.getHeightFromBlocks(1)*(endY-beginY+1));    
     pop();
   }
   
@@ -62,6 +64,14 @@ class Box {
     if (this.beginY > 0) this.beginY--; else this.crashedUp = true;  
     if (this.endX < this.grid.horizontalBlocks - 1) this.endX++; else this.crashedRight = true;
     if (this.endY < this.grid.verticalBlocks - 1) this.endY++; else this.crashedDown = true;      
+  }
+  
+  void shrinkLeft() {
+    this.beginX++;  
+  }
+  
+  void shrinkRight() {
+    this.endX--;
   }
   
   void checkBorders() {
@@ -119,6 +129,21 @@ class Box {
     if (this.crashedUp && this.crashedDown && this.crashedLeft && this.crashedRight) {
       this.done = true; 
     }
+  }
+  
+  boolean sameAreaOf(Box b) {
+    return (this.beginX == b.beginX &&
+            this.endX   == b.endX &&
+            this.beginY == b.beginY &&
+            this.endY   == b.endY);
+  }
+  
+  boolean done() {
+    return this.done;  
+  }
+  
+  boolean valid() {
+    return this.valid;  
   }
   
 }

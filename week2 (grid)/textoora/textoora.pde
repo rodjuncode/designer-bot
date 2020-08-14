@@ -6,7 +6,7 @@ void setup() {
   size(700,700);
   colorMode(HSB,360,100,100,100);
   
-  //frameRate(4);
+  //frameRate(0.75);
   
   // create palette
   color palette[] = new color[3];
@@ -33,7 +33,11 @@ void setup() {
 void draw() {
   background(0,0,80,100);
   translate(width/2-b.getDimensions().x/2,height/2-b.getDimensions().y/2);
-  b.show(false);
+  b.show(true);
+  //for(int i = 0; i<  b.cover.boxes.size(); i++) {
+  //  b.cover.boxes.get(i).show();    
+  //}
+  b.cover.boxes.get(showBox).show();
   
   //for (int i = 0; i < boxes.size(); i++) {
   //  //boxes.get(i).show();
@@ -45,19 +49,34 @@ void draw() {
   //  }
   //}
   
+  //if (showBox < b.cover.boxes.size()-1) {
+  //  showBox++;
+  //  println(showBox);
+  //} else {
+  //  showBox = 0;
+  //  b.generate();
+  //}
+
   
   //b.generate();
-  noLoop();
+  //noLoop();
   
-  //saveFrame("../../../_output/textoora/boxes/frame####.png");
+  saveFrame("../../../_output/textoora/boxes/frame####.png");
 }
 
 void mousePressed() {
-  //if (showBox < boxes.size()) {
-  //  showBox++;
-  //} else {
-  //  showBox = 0;
-  //}
+  if (showBox < b.cover.boxes.size()-1) {
+    showBox++;
+    println(showBox);
+  } else {
+    showBox = 0;
+  }
   //saveFrame("../../../_output/textoora/frame####.png");
   //b.generate();  
+}
+
+void keyPressed() {
+  if (key == 'g' || key == 'G') {
+    b.generate();
+  }  
 }

@@ -118,13 +118,20 @@ class Grid {
     return this.canvas.height - this.getTopMargin() - this.getBottomMargin();  
   }
   
-  boolean beyondBottomMargin(float p) {
-    return this.getBottomMarginPosition() - p < DIFF;
+  boolean hitBottomMargin(float p) {
+    return abs(this.getBottomMarginPosition() - p) < DIFF;
   }
 
-  boolean beyondRightMargin(float p) {
-    return this.getRightMarginPosition() - p < DIFF;
+  boolean hitRightMargin(float p) {
+    return abs(this.getRightMarginPosition() - p) < DIFF;
+  }
+  
+  int getVerticalBlocks() {
+    return this.verticalBlocks;  
   }
 
+  int getHorizontalBlocks() {
+    return this.horizontalBlocks;  
+  }
   
 }
