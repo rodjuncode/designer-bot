@@ -31,7 +31,6 @@ class Book {
   void show() {
     this.castShadow();
     this.cover.show();
-    //this.castFolds();
   }
 
   void show(boolean showGrid) {
