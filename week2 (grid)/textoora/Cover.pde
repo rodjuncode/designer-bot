@@ -51,7 +51,7 @@ class Cover {
     // create boxes or each grid tile
     for (int i = 0; i < artGridX; i++) {
       for (int j = 0; j < artGridY; j++) {
-        b.add(new Box(this.art,this.artGrid,30,2,45,10,i,j,i,j)); // needs to move these arguments to the config
+        b.add(new Box(this.art,this.artGrid,30,3,45,10,i,j,i,j)); // needs to move these arguments to the config
       }
     }
     
@@ -131,7 +131,6 @@ class Cover {
       }
     }
     
-    print(this.boxes.size());
     
   }
   
