@@ -45,7 +45,7 @@ class Box {
     int i = round(position.y*this.canvas.width+position.x);
     return this.canvas.pixels[i];
   }
-  
+
 
   PVector getPosition() {
     return this.grid.getPosition(beginX,beginY);  

@@ -102,4 +102,12 @@ class Book {
     return this.author;  
   }
   
+  void setTitle(String title) {
+    this.title = title;    
+  }
+  
+  void setAuthor(String author) {
+    this.author = author;
+  }
+  
 }

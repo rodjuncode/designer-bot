@@ -5,6 +5,7 @@ ControlP5 cp5;
 PGraphics ui;
 Grid uiGrid;
 boolean showGrid = false;
+boolean showBoxes = false;
 
 Book b;
 
@@ -19,20 +20,32 @@ void setup() {
   // 1.2 controls
   int btnSize = 19;
   int txtSize = 24;
+  color lblColor = color(#457b9d);
   cp5 = new ControlP5(this);
   PVector txtText1Pos = uiGrid.getPosition(8,2);  
-  cp5.addTextfield("texto1")
+  cp5.addTextfield("title")
      .setCaptionLabel("Titulo")
+     .setColorCaptionLabel(lblColor) 
      .setPosition(txtText1Pos.x,txtText1Pos.y)
      .setSize(round(uiGrid.getWidthFromBlocks(6)),txtSize)
      .setFocus(true)     
      .setAutoClear(false);  
   PVector txtText2Pos = uiGrid.getPosition(8,3);  
-  cp5.addTextfield("texto2")
+  cp5.addTextfield("author")
      .setCaptionLabel("Autor")
+     .setColorCaptionLabel(lblColor)     
      .setPosition(txtText2Pos.x,txtText2Pos.y)
      .setSize(round(uiGrid.getWidthFromBlocks(6)),txtSize)
-     .setAutoClear(false);  
+     .setAutoClear(false);
+  PVector tglShowBoxes = uiGrid.getPosition(8,10);
+  cp5.addToggle("toggleShowBoxes")
+      .setCaptionLabel("Caixas")
+     .setPosition(tglShowBoxes.x,tglShowBoxes.y)
+     .setSize(50,20)
+     .setValue(false)
+     .setMode(ControlP5.SWITCH)
+     ;     
+     
   PVector btnGeneratePos = uiGrid.getPosition(0,13);
   cp5.addButton("gerar")
      .setPosition(btnGeneratePos.x,btnGeneratePos.y)
@@ -57,15 +70,37 @@ void setup() {
 
 void draw() {
   background(0,0,80,100);
+
+  //String title = cp5.get(Textfield.class,"title").getText();
+  //String[] titleTokens = split(title, ' ');
+  //int halfTitle = ceil(titleTokens.length/2);
+  //String fstTitleHalf = "";
+  //String sndTitleHalf = "";
+  //for (int i = 0; i < titleTokens.length; i++) {
+  //  if (i < halfTitle) {
+  //    fstTitleHalf += (fstTitleHalf.length() > 0 ? " " : "") + titleTokens[i];  
+  //  } else {
+  //    sndTitleHalf += (sndTitleHalf.length() > 0 ? " " : "") + titleTokens[i];
+  //  }
+  //}
+
+  //b.cover.clearTextContent();
+  //b.cover.addTextToContent(fstTitleHalf);
+  //if (sndTitleHalf.length() > 0) b.cover.addTextToContent(sndTitleHalf);  
+  //b.cover.addTextToContent(cp5.get(Textfield.class,"author").getText());
   
-  b.cover.clearTextContent();
-    b.cover.addTextToContent(cp5.get(Textfield.class,"texto1").getText());
-  b.cover.addTextToContent(cp5.get(Textfield.class,"texto2").getText());
+  b.setTitle(cp5.get(Textfield.class,"title").getText());
+  b.setAuthor(cp5.get(Textfield.class,"author").getText());
+  b.cover.generateContent();
+  
+  //b.cover.addTextToContent(cp5.get(Textfield.class,"texto4").getText());  
 
   PVector bookPosition = uiGrid.getPosition(0,2);
   push();
   translate(bookPosition.x,bookPosition.y);
-  b.cover.updateContent();
+  if (showBoxes) {
+    b.cover.showBoxes();
+  }
   b.show();
   pop();
   
@@ -73,6 +108,8 @@ void draw() {
   
   uiGrid.show();
   if (showGrid) image(ui,0,0);
+  
+  saveFrame("../../../_output/textoora/tipografia/#####.png");
   
 }
 
@@ -86,4 +123,8 @@ void keyPressed() {
 
 void gerar() {
   b.generate();
+}
+  
+void toggleShowBoxes(boolean theFlag) {
+  showBoxes = theFlag;
 }
