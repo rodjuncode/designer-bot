@@ -7,7 +7,7 @@ class Cover {
   PGraphics content;  
   int contentGridX = 3;
   int contentGridY = 1;
-  float margin = 10;
+  int margin = 0;
 
   PGraphics title;
   PVector titlePosition;
@@ -51,15 +51,8 @@ class Cover {
   }
   
   void generateContent() {
-    //this.content.beginDraw();
-    //PFont font = createFont("assets/fonts/BebasNeue-Regular.ttf", 100);
-    //this.content.textFont(font);
-    //this.content.textAlign(LEFT);
-    //this.content.text("OI",100,100);
-    //this.content.line(0,100,width,100);
-    //this.content.line(100,0,100,height);
-    //this.content.endDraw();
     int margin = 3;
+    float scalar = 0.8;
     this.content.beginDraw();
     this.content.clear(); //<>//
     PFont font = createFont("assets/fonts/BebasNeue-Regular.ttf", 1);
@@ -84,10 +77,13 @@ class Cover {
       }    
       txtPos = this.boxes.get(0).getPosition();
       txtSize = this.boxes.get(0).getSize();
-      s = txtSize.y*1.7;
-      //s = txtSize.y + this.artGrid.getHeightFromBlocks(5);
-      this.content.textAlign(LEFT);
+      s = txtSize.y;
       this.content.textSize(s);
+      while(this.content.textAscent()*scalar < txtSize.y + artGrid.getHeightFromBlocks(1)) {
+        s+=1;
+        this.content.textSize(s);
+      }
+      this.content.textAlign(LEFT);
       this.content.fill(255,255,255,255);
       while (this.content.textWidth(fstTitleHalf) >= txtSize.x - margin*3) {
         s-=0.05;
@@ -98,10 +94,13 @@ class Cover {
       if (sndTitleHalf.length() > 0) {
         txtPos = this.boxes.get(1).getPosition();
         txtSize = this.boxes.get(1).getSize();
-        s = txtSize.y*1.7;
-        //s = txtSize.y + this.artGrid.getHeightFromBlocks(5);        
-        this.content.textAlign(LEFT);
+        s = txtSize.y;
         this.content.textSize(s);
+        while(this.content.textAscent()*scalar < txtSize.y + artGrid.getHeightFromBlocks(1)) { //<>//
+          s+=0.05;
+          this.content.textSize(s);
+        }
+        this.content.textAlign(LEFT);
         this.content.fill(255,255,255,255);
         while (this.content.textWidth(sndTitleHalf) >= txtSize.x - margin*3) {
           s-=0.05;
@@ -155,11 +154,12 @@ class Cover {
   void generate() {
     this.contentText = new ArrayList<String>();    
     this.art = createGraphics(round(this.book.getDimensions().x),round(this.book.getDimensions().y)); 
-    this.artGrid = new Grid(this.art,artGridX,artGridY,new float[]{margin*2,margin,margin,margin});
+    this.artGrid = new Grid(this.art,artGridX,artGridY,new float[]{margin,margin,margin,margin});
     this.content = createGraphics(round(this.book.getDimensions().x),round(this.book.getDimensions().y));
-    this.contentGrid = new Grid(this.art,contentGridX,contentGridY,new float[]{margin*2,margin,margin,margin});
+    this.contentGrid = new Grid(this.art,contentGridX,contentGridY,new float[]{margin,margin,margin,margin});
     this.generateArt();
     this.generateBoxes();
+    this.generateContent();
   }
 
   void generateBoxes() {
@@ -294,6 +294,10 @@ class Cover {
   
   void clearTextContent() {
     this.contentText.clear();  
+  }
+  
+  void setMargin(int margin) {
+    this.margin = margin;  
   }
   
 }

@@ -14,7 +14,7 @@ class Book {
   float shadowSize = 5;
   float foldSize = 5;
   
-  Book(String title,String author,String txtFile, PVector dimensions, color[] palette) {
+  Book(String title,String author,String txtFile, PVector dimensions, color[] palette, int margin) {
     this.title = title;
     this.author = author;
     this.txtFile = txtFile;
@@ -26,6 +26,10 @@ class Book {
 
     this.shadowSize = this.dimensions.x/50;
     this.foldSize = this.dimensions.x/50;
+
+    this.cover = new Cover(this);
+    this.cover.setMargin(margin);
+    
   }
   
   void show() {
@@ -74,7 +78,6 @@ class Book {
   }
 
   void generate() {
-    this.cover = new Cover(this);  
     this.cover.generate();
   }
   
