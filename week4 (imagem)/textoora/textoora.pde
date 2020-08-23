@@ -41,6 +41,13 @@ void setup() {
      .setPosition(txtText2Pos.x,txtText2Pos.y)
      .setSize(round(uiGrid.getWidthFromBlocks(6)),txtSize)
      .setAutoClear(false);
+  PVector txtText3Pos = uiGrid.getPosition(8,4);  
+  cp5.addTextfield("palette")
+     .setCaptionLabel("Paleta")
+     .setColorCaptionLabel(lblColor)     
+     .setPosition(txtText3Pos.x,txtText3Pos.y)
+     .setSize(round(uiGrid.getWidthFromBlocks(6)),txtSize)
+     .setAutoClear(false);     
   PVector tglDebug = uiGrid.getPosition(13,0);
   cp5.addToggle("toggleDebug")
      .setCaptionLabel("Debug")
@@ -50,7 +57,7 @@ void setup() {
      .setValue(false)
      .setMode(ControlP5.SWITCH)
      ;     
-  PVector sldMargins = uiGrid.getPosition(8,4);    
+  PVector sldMargins = uiGrid.getPosition(8,5);    
   cp5.addSlider("margin")
      .setCaptionLabel("Margens")
      .setColorCaptionLabel(lblColor) 
@@ -125,8 +132,12 @@ void draw() {
 
 
 void generate() {
-  p.crawl();
-  b.setPalette(p.getSimplePalette());
+  String q = cp5.get(Textfield.class,"palette").getText();
+  if (q.length() > 0) {
+    p = new Palette(q);
+    p.crawl();
+    b.setPalette(p.getSimplePalette());
+  }
   b.generate();
 }
   
