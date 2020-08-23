@@ -94,13 +94,15 @@ void setup() {
   palette[2] = color(208, 219, 213, alpha);
   int x = round(uiGrid.getWidthFromBlocks(7));
   int y = round(uiGrid.getWidthFromBlocks(9));
-  String t = "Humascotas";
+  String t = "Carne Empalada";
   String a = "Rodrigo Junqueira";
+  String q = "carne";
   cp5.get(Textfield.class,"title").setText(t);
   cp5.get(Textfield.class,"author").setText(a);
-  p = new Palette("Buenos Aires");
+  cp5.get(Textfield.class,"palette").setText(q);
+  p = new Palette(q);
   p.crawl();
-  b = new Book(t,a,"assets/short-stories/carne-empalada-rodrigo-junqueira.txt",new PVector(x,y,10),palette,margin);
+  b = new Book(t,a,"assets/short-stories/carne-empalada-rodrigo-junqueira.txt",new PVector(x,y,10),p.getSimplePalette(),margin);
   b.parseTxt();
   b.generate();
 
@@ -127,6 +129,7 @@ void draw() {
   if (debug) {
     uiGrid.show();
     image(ui,0,0);
+    p.showOptions();
   }
 }
 
