@@ -4,7 +4,7 @@ class Book {
   String author;
   String txtFile;
   PVector dimensions;
-  color[] palette;
+  Palette palette;
   
   ArrayList<String> sentences;
   int longestSentenceSize;
@@ -14,7 +14,7 @@ class Book {
   float shadowSize = 5;
   float foldSize = 5;
   
-  Book(String title,String author,String txtFile, PVector dimensions, color[] palette, int margin) {
+  Book(String title,String author,String txtFile, PVector dimensions, Palette palette, int margin) {
     this.title = title;
     this.author = author;
     this.txtFile = txtFile;
@@ -93,7 +93,7 @@ class Book {
     return this.dimensions;
   }
 
-  color[] getPalette() {
+  Palette getPalette() {
     return this.palette;  
   }
   
@@ -113,7 +113,7 @@ class Book {
     this.author = author;
   }
   
-  void setPalette(color[] palette) {
+  void setPalette(Palette palette) {
     this.palette = palette;    
   }
   

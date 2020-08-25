@@ -55,10 +55,11 @@ class Cover {
     float scalar = 0.8;
     this.content.beginDraw();
     this.content.clear(); //<>//
-    PFont font = createFont("assets/fonts/BebasNeue-Regular.ttf", 1);
-    this.content.textFont(font);
-    String title = this.book.getTitle();
-    String author = this.book.getAuthor();
+    PFont titleFont = createFont("assets/fonts/Voltaire-Regular.ttf", 1);
+    PFont authorFont = createFont("assets/fonts/PoiretOne-Regular.ttf", 1);
+    this.content.textFont(titleFont);
+    String title = this.book.getTitle().toUpperCase();
+    String author = this.book.getAuthor().toUpperCase();
     PVector txtPos, txtSize;
     float s;
     // title
@@ -96,7 +97,7 @@ class Cover {
         txtSize = this.boxes.get(1).getSize();
         s = txtSize.y;
         this.content.textSize(s);
-        while(this.content.textAscent()*scalar < txtSize.y + artGrid.getHeightFromBlocks(1)) { //<>//
+        while(this.content.textAscent()*scalar < txtSize.y + artGrid.getHeightFromBlocks(1)) { //<>// //<>// //<>//
           s+=0.05;
           this.content.textSize(s);
         }
@@ -111,17 +112,19 @@ class Cover {
     }
     // author
     if (author != null && author.length() > 0) {
+      this.content.textFont(authorFont);
       txtPos = this.boxes.get(2).getPosition();
       txtSize = this.boxes.get(2).getSize();
-      s = txtSize.y*.75;
+      s = txtSize.y*.70;
       this.content.textAlign(RIGHT);
       this.content.textSize(s);
-      this.content.fill(255,255,255,180);
+      //this.content.fill(255,255,255,255);
+      this.content.fill(this.book.palette.getColorContrast());
       while (this.content.textWidth(author) >= txtSize.x - margin*3) {
         s-=0.05;
         this.content.textSize(s);
       }
-      this.content.text(author,txtPos.x+txtSize.x-margin,txtPos.y+txtSize.y-1); 
+      this.content.text(author,txtPos.x+txtSize.x-margin,txtPos.y+txtSize.y-2); 
     }
     this.content.endDraw();
   }
@@ -249,7 +252,7 @@ class Cover {
     
     ArrayList<String> sentences = this.book.getSentences();
     int longestSentenceSize = this.book.getLongestSentenceSize();
-    color[] palette = this.book.getPalette();
+    color[] palette = this.book.palette.getSimplePalette();
     
     float x = this.artGrid.getLeftMarginPosition();
     float y = this.artGrid.getTopMarginPosition();

@@ -94,15 +94,16 @@ void setup() {
   palette[2] = color(208, 219, 213, alpha);
   int x = round(uiGrid.getWidthFromBlocks(7));
   int y = round(uiGrid.getWidthFromBlocks(9));
-  String t = "Carne Empalada";
-  String a = "Rodrigo Junqueira";
-  String q = "carne";
+  String t = "NEUROMANCER";
+  String a = "WILLIAN GIBSON";
+  String q = "cyberpunk";
   cp5.get(Textfield.class,"title").setText(t);
   cp5.get(Textfield.class,"author").setText(a);
   cp5.get(Textfield.class,"palette").setText(q);
   p = new Palette(q);
   p.crawl();
-  b = new Book(t,a,"assets/short-stories/carne-empalada-rodrigo-junqueira.txt",new PVector(x,y,10),p.getSimplePalette(),margin);
+  p.analyze();
+  b = new Book(t,a,"assets/short-stories/carne-empalada-rodrigo-junqueira.txt",new PVector(x,y,10),p,margin);
   b.parseTxt();
   b.generate();
 
@@ -139,7 +140,8 @@ void generate() {
   if (q.length() > 0) {
     p = new Palette(q);
     p.crawl();
-    b.setPalette(p.getSimplePalette());
+    p.analyze();
+    b.setPalette(p);
   }
   b.generate();
 }
