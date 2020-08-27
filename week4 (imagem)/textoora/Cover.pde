@@ -52,11 +52,11 @@ class Cover {
   
   void generateContent() {
     int margin = 3;
-    float scalar = 0.8;
+    float scalar = 0.76;
     this.content.beginDraw();
-    this.content.clear(); //<>//
-    PFont titleFont = createFont("assets/fonts/Voltaire-Regular.ttf", 1);
-    PFont authorFont = createFont("assets/fonts/PoiretOne-Regular.ttf", 1);
+    this.content.clear();
+    PFont titleFont = createFont("assets/fonts/Anton-Regular.ttf", 1);    
+    PFont authorFont = createFont("assets/fonts/Teko-Regular.ttf", 1);    
     this.content.textFont(titleFont);
     String title = this.book.getTitle().toUpperCase();
     String author = this.book.getAuthor().toUpperCase();
@@ -76,40 +76,31 @@ class Cover {
           sndTitleHalf += (sndTitleHalf.length() > 0 ? " " : "") + titleTokens[i];
         }
       }    
-      txtPos = this.boxes.get(0).getPosition();
-      txtSize = this.boxes.get(0).getSize();
-      s = txtSize.y;
-      this.content.textSize(s);
-      while(this.content.textAscent()*scalar < txtSize.y + artGrid.getHeightFromBlocks(1)) {
-        s+=1;
-        this.content.textSize(s);
-      }
-      this.content.textAlign(LEFT);
-      this.content.fill(255,255,255,255);
-      while (this.content.textWidth(fstTitleHalf) >= txtSize.x - margin*3) {
-        s-=0.05;
-        this.content.textSize(s);
-      }
-      this.content.text(fstTitleHalf,txtPos.x+margin,txtPos.y+txtSize.y-1);      
-      // 2nd Half
-      if (sndTitleHalf.length() > 0) {
-        txtPos = this.boxes.get(1).getPosition();
-        txtSize = this.boxes.get(1).getSize();
-        s = txtSize.y;
-        this.content.textSize(s);
-        while(this.content.textAscent()*scalar < txtSize.y + artGrid.getHeightFromBlocks(1)) { //<>// //<>// //<>//
-          s+=0.05;
+      String[] titleChunks = new String[]{fstTitleHalf, sndTitleHalf};
+      for (int i = 0; i < titleChunks.length; i++) {
+        if (titleChunks[i].length() > 0) {
+          txtPos = this.boxes.get(i).getPosition();
+          txtSize = this.boxes.get(i).getSize();
+          s = txtSize.y;
           this.content.textSize(s);
+          float verticalOffset = 0;
+          if (txtPos.y > artGrid.getTopMargin() + artGrid.getHeightFromBlocks(1)) {
+            verticalOffset = artGrid.getHeightFromBlocks(1);
+          }
+          while(this.content.textAscent()*scalar < txtSize.y + verticalOffset) {
+            s+=1.5;
+            this.content.textSize(s);
+          }
+          this.content.textAlign(LEFT);
+          this.content.fill(this.book.palette.getTxtColor(0));
+          while (this.content.textWidth(titleChunks[i]) >= txtSize.x - margin*3) {
+            s-=0.05;
+            this.content.textSize(s);
+          }
+          this.content.text(titleChunks[i],txtPos.x+margin,txtPos.y+txtSize.y-0.5);  
         }
-        this.content.textAlign(LEFT);
-        this.content.fill(255,255,255,255);
-        while (this.content.textWidth(sndTitleHalf) >= txtSize.x - margin*3) {
-          s-=0.05;
-          this.content.textSize(s);
-        }
-        this.content.text(sndTitleHalf,txtPos.x+margin,txtPos.y+txtSize.y-1);
       }
-    }
+    } //<>// //<>//
     // author
     if (author != null && author.length() > 0) {
       this.content.textFont(authorFont);
@@ -119,12 +110,13 @@ class Cover {
       this.content.textAlign(RIGHT);
       this.content.textSize(s);
       //this.content.fill(255,255,255,255);
-      this.content.fill(this.book.palette.getColorContrast());
+      //this.content.fill(this.book.palette.getColorContrast());
+      this.content.fill(this.book.palette.getTxtColor(1));      
       while (this.content.textWidth(author) >= txtSize.x - margin*3) {
         s-=0.05;
         this.content.textSize(s);
       }
-      this.content.text(author,txtPos.x+txtSize.x-margin,txtPos.y+txtSize.y-2); 
+      this.content.text(author,txtPos.x+txtSize.x-margin,txtPos.y+txtSize.y-1); 
     }
     this.content.endDraw();
   }
@@ -252,7 +244,7 @@ class Cover {
     
     ArrayList<String> sentences = this.book.getSentences();
     int longestSentenceSize = this.book.getLongestSentenceSize();
-    color[] palette = this.book.palette.getSimplePalette();
+    color[] palette = this.book.palette.getArtPalette();
     
     float x = this.artGrid.getLeftMarginPosition();
     float y = this.artGrid.getTopMarginPosition();

@@ -10,6 +10,9 @@ PGraphics ui;
 Grid uiGrid;
 boolean debug = false;
 int margin;
+PVector dspPalette;
+
+String previousColorQuery = "";
 
 void setup() {
   
@@ -48,6 +51,7 @@ void setup() {
      .setPosition(txtText3Pos.x,txtText3Pos.y)
      .setSize(round(uiGrid.getWidthFromBlocks(6)),txtSize)
      .setAutoClear(false);     
+  dspPalette = uiGrid.getPosition(0,12);     
   PVector tglDebug = uiGrid.getPosition(13,0);
   cp5.addToggle("toggleDebug")
      .setCaptionLabel("Debug")
@@ -57,7 +61,7 @@ void setup() {
      .setValue(false)
      .setMode(ControlP5.SWITCH)
      ;     
-  PVector sldMargins = uiGrid.getPosition(8,5);    
+  PVector sldMargins = uiGrid.getPosition(8,6);    
   cp5.addSlider("margin")
      .setCaptionLabel("Margens")
      .setColorCaptionLabel(lblColor) 
@@ -85,6 +89,12 @@ void setup() {
      .setCaptionLabel("Gerar")
      .setPosition(btnGeneratePos.x,btnGeneratePos.y)
      .setSize(round(uiGrid.getWidthFromBlocks(2)),round(uiGrid.getHeightFromBlocks(1)));
+  PVector btnCapturePos = uiGrid.getPosition(11,10);
+  cp5.addButton("capture")
+     .setCaptionLabel("Capturar")
+     .setPosition(btnCapturePos.x,btnCapturePos.y)
+     .setSize(round(uiGrid.getWidthFromBlocks(2)),round(uiGrid.getHeightFromBlocks(1)));
+     
      
   // create palette
   color palette[] = new color[3];
@@ -94,20 +104,21 @@ void setup() {
   palette[2] = color(208, 219, 213, alpha);
   int x = round(uiGrid.getWidthFromBlocks(7));
   int y = round(uiGrid.getWidthFromBlocks(9));
-  String t = "NEUROMANCER";
-  String a = "WILLIAN GIBSON";
-  String q = "cyberpunk";
+  String t = "Carne Empalada";
+  String a = "Rodrigo Junqueira";
+  String q = "carnificina";
   cp5.get(Textfield.class,"title").setText(t);
   cp5.get(Textfield.class,"author").setText(a);
   cp5.get(Textfield.class,"palette").setText(q);
+  previousColorQuery = new String(q);
+  println("Crawling...");
   p = new Palette(q);
   p.crawl();
   p.analyze();
+  p.generatePalette();  
   b = new Book(t,a,"assets/short-stories/carne-empalada-rodrigo-junqueira.txt",new PVector(x,y,10),p,margin);
   b.parseTxt();
   b.generate();
-
-  
   
 }
 
@@ -127,6 +138,8 @@ void draw() {
   b.show();
   pop();
   
+  p.showPalette(dspPalette.x,dspPalette.y,(int) uiGrid.getWidthFromBlocks(7),5);
+  
   if (debug) {
     uiGrid.show();
     image(ui,0,0);
@@ -136,13 +149,18 @@ void draw() {
 
 
 void generate() {
-  String q = cp5.get(Textfield.class,"palette").getText();
+  String q = new String(cp5.get(Textfield.class,"palette").getText());
   if (q.length() > 0) {
-    p = new Palette(q);
-    p.crawl();
-    p.analyze();
-    b.setPalette(p);
+    if (!q.equals(previousColorQuery)) {
+      println("Crawling...");
+      p = new Palette(q);
+      p.crawl();
+      p.analyze();    
+      b.setPalette(p);
+      previousColorQuery = new String(q);
+    }
   }
+  p.generatePalette();  
   b.generate();
 }
   
@@ -153,8 +171,6 @@ void toggleDebug(boolean theFlag) {
   }
 }
 
-void keyPressed() {
-  if (key == 'c') {
-    saveFrame("../../../_output/textoora/typography/####.png");  
-  }
+void capture() {
+  saveFrame("../../../_output/textoora/typography/####.png");  
 }
