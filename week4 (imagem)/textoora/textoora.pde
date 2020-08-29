@@ -1,5 +1,6 @@
 import controlP5.*;
 import java.util.*;
+import processing.pdf.*;
 
 Book b;
 Palette p;
@@ -29,27 +30,27 @@ void setup() {
   int txtSize = 24;
   color lblColor = color(#457b9d);
   cp5 = new ControlP5(this);
-  PVector txtText1Pos = uiGrid.getPosition(8,2);  
+  PVector txtText1Pos = uiGrid.getPosition(9,2);  
   cp5.addTextfield("title")
      .setCaptionLabel("Titulo")
      .setColorCaptionLabel(lblColor) 
      .setPosition(txtText1Pos.x,txtText1Pos.y)
-     .setSize(round(uiGrid.getWidthFromBlocks(6)),txtSize)
+     .setSize(round(uiGrid.getWidthFromBlocks(5)),txtSize)
      .setFocus(true)     
      .setAutoClear(false);  
-  PVector txtText2Pos = uiGrid.getPosition(8,3);  
+  PVector txtText2Pos = uiGrid.getPosition(9,3);  
   cp5.addTextfield("author")
      .setCaptionLabel("Autor")
      .setColorCaptionLabel(lblColor)     
      .setPosition(txtText2Pos.x,txtText2Pos.y)
-     .setSize(round(uiGrid.getWidthFromBlocks(6)),txtSize)
+     .setSize(round(uiGrid.getWidthFromBlocks(5)),txtSize)
      .setAutoClear(false);
-  PVector txtText3Pos = uiGrid.getPosition(8,4);  
+  PVector txtText3Pos = uiGrid.getPosition(9,4);  
   cp5.addTextfield("palette")
      .setCaptionLabel("Paleta")
      .setColorCaptionLabel(lblColor)     
      .setPosition(txtText3Pos.x,txtText3Pos.y)
-     .setSize(round(uiGrid.getWidthFromBlocks(6)),txtSize)
+     .setSize(round(uiGrid.getWidthFromBlocks(5)),txtSize)
      .setAutoClear(false);     
   dspPalette = uiGrid.getPosition(0,12);     
   PVector tglDebug = uiGrid.getPosition(13,0);
@@ -61,7 +62,7 @@ void setup() {
      .setValue(false)
      .setMode(ControlP5.SWITCH)
      ;     
-  PVector sldMargins = uiGrid.getPosition(8,6);    
+  PVector sldMargins = uiGrid.getPosition(9,6);    
   cp5.addSlider("margin")
      .setCaptionLabel("Margens")
      .setColorCaptionLabel(lblColor) 
@@ -84,14 +85,14 @@ void setup() {
   //   .addItems(p)
   //   .setType(ScrollableList.DROPDOWN)
   //   .setOpen(false);     
-  PVector btnGeneratePos = uiGrid.getPosition(8,10);
+  PVector btnGeneratePos = uiGrid.getPosition(9,10);
   cp5.addButton("generate")
      .setCaptionLabel("Gerar")
      .setPosition(btnGeneratePos.x,btnGeneratePos.y)
      .setSize(round(uiGrid.getWidthFromBlocks(2)),round(uiGrid.getHeightFromBlocks(1)));
-  PVector btnCapturePos = uiGrid.getPosition(11,10);
-  cp5.addButton("capture")
-     .setCaptionLabel("Capturar")
+  PVector btnCapturePos = uiGrid.getPosition(12,10);
+  cp5.addButton("save")
+     .setCaptionLabel("Salvar")
      .setPosition(btnCapturePos.x,btnCapturePos.y)
      .setSize(round(uiGrid.getWidthFromBlocks(2)),round(uiGrid.getHeightFromBlocks(1)));
      
@@ -173,4 +174,9 @@ void toggleDebug(boolean theFlag) {
 
 void capture() {
   saveFrame("../../../_output/textoora/typography/####.png");  
+}
+
+void save() {
+  PGraphics pdf = createGraphics(round(b.dimensions.x), round(b.dimensions.y), PDF, "output.pdf");
+  b.cover.print(pdf);
 }

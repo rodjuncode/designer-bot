@@ -33,6 +33,14 @@ class Cover {
     image(this.art,0,0);
     image(this.content,0,0);
   }
+  
+  void print(PGraphics pdf) {
+    pdf.beginDraw();
+    pdf.image(this.art,0,0);
+    pdf.image(this.content,0,0);
+    pdf.dispose();
+    pdf.endDraw();
+  }
 
   void showBoxes() {
     for (int i = 0; i < this.boxes.size(); i++) {
