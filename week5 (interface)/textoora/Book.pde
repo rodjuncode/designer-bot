@@ -5,6 +5,7 @@ class Book {
   String txtFile;
   PVector dimensions;
   Palette palette;
+  boolean ready;
   
   ArrayList<String> sentences;
   int longestSentenceSize;
@@ -30,6 +31,7 @@ class Book {
     this.cover = new Cover(this);
     this.cover.setMargin(margin);
     
+    this.ready = false;
   }
   
   void show() {
@@ -75,6 +77,11 @@ class Book {
         this.longestSentenceSize = sentenceSize;  
       }      
     }
+    this.ready = true;
+  }
+  
+  boolean ready() {
+    return this.ready;  
   }
 
   void generate() {

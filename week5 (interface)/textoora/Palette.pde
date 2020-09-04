@@ -20,6 +20,8 @@
 
   Palette(String query) {
     this.query = query;
+    this.artPalette = new ArrayList<PVector>();
+    this.txtPalette = new ArrayList<PVector>();    
   }
   
   void crawl() {
@@ -280,7 +282,7 @@
       fill(this.getColor(fullPalette.get(i)));
       rect(i*colorSpace,0,colorSpace,h);  
     }
-    pop();      
+    pop();     
   }
 
   

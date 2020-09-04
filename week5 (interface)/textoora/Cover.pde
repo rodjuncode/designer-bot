@@ -103,7 +103,7 @@ class Cover {
           canvas.text(titleChunks[i],txtPos.x+margin,txtPos.y+txtSize.y-0.5);  
         }
       }
-    }  //<>//
+    } 
     // author
     if (author != null && author.length() > 0) {
       canvas.textFont(authorFont);
@@ -122,7 +122,7 @@ class Cover {
   }
 
   void generate() {
-    this.art = createGraphics(round(this.book.getDimensions().x),round(this.book.getDimensions().y)); 
+    this.art = createGraphics(round(this.book.getDimensions().x),round(this.book.getDimensions().y));  //<>// //<>//
     this.artGrid = new Grid(this.art,artGridX,artGridY,new float[]{margin,margin,margin,margin});
     this.content = createGraphics(round(this.book.getDimensions().x),round(this.book.getDimensions().y));
     this.contentGrid = new Grid(this.art,contentGridX,contentGridY,new float[]{margin,margin,margin,margin});
@@ -132,7 +132,11 @@ class Cover {
   }
   
   void print() {
-    PGraphics pdf = createGraphics(round(this.book.dimensions.x),round(this.book.dimensions.y),PDF,"../../../_output/textoora/capas/capa.pdf");
+    
+  }
+  
+  void print(String path) {
+    PGraphics pdf = createGraphics(round(this.book.dimensions.x),round(this.book.dimensions.y),PDF,path);
     pdf.beginDraw();
     this.generateArt(pdf);
     this.generateContent(pdf);
@@ -230,10 +234,14 @@ class Cover {
   
   void generateArt() {
     this.generateStartChar();
+    this.updateArt();
+  }
+  
+  void updateArt() {
     this.art.beginDraw();
     this.art.clear();
     this.generateArt(this.art);
-    this.art.endDraw();
+    this.art.endDraw();    
   }
   
   void generateArt(PGraphics canvas) {
